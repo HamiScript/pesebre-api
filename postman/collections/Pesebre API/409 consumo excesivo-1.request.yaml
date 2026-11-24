@@ -1,0 +1,8 @@
+$kind: http-request
+name: 409 consumo excesivo
+url: http://127.0.0.1:8000/api/recursos/2/consumo
+method: PATCH
+body:
+  type: json
+  content: '{"cantidad":100}'
+order: 2000

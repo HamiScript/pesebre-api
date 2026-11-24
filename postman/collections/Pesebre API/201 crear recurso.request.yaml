@@ -1,0 +1,7 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/recursos
+method: POST
+body:
+  type: json
+  content: '{"nombre":"Paja gruesa","categoria":"PAJA","cantidad":20,"stockMinimo":5}'
+order: 1000
