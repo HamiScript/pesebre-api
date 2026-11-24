@@ -21,4 +21,5 @@ Route::middleware(RolRequerido::class.':ENCARGADO_PESEBRE')->group(function () {
     Route::post('/recursos', [RecursoController::class, 'store']);
     Route::patch('/recursos/{id}/consumo', [RecursoController::class, 'consumo']);
     Route::delete('/recursos/{id}', [RecursoController::class, 'destroy']);
+    Route::patch('/recursos/{id}/reabastecimiento', [RecursoController::class, 'reabastecimiento']);
 });

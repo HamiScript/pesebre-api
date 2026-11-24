@@ -44,7 +44,21 @@ class RecursoController extends Controller
 
         return $this->servicio->consumir($id, $datos['cantidad']);
     }
+    public function reabastecimiento(Request $request, int $id)
+    {
+        $datos = $request->validate(['cantidad' => ['required', 'integer', 'min:1']]);
 
+        $resultado = $this->servicio->reabastecer($id, $datos['cantidad']);
+
+        if ($resultado['confirmado']) {
+            return $resultado['recurso'];
+        }
+
+        return response()->json([
+            'mensaje' => 'El Mercado de Belén no está disponible. El reabastecimiento quedó pendiente y se confirmará después.',
+            'recurso' => $resultado['recurso'],
+        ], 202);
+    }
     public function destroy(int $id)
     {
         $this->servicio->eliminar($id);

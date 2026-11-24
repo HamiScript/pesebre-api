@@ -5,9 +5,11 @@ namespace App\Services;
 use App\Exceptions\ApiException;
 use App\Models\RecursoPesebre;
 use Illuminate\Database\Eloquent\Collection;
+use App\Exceptions\MercadoNoDisponibleException;
 
 class RecursoService
 {
+    public function __construct(private MercadoAdapter $mercado) {}
     public function listar(?string $categoria, ?string $estado): Collection
     {
         return RecursoPesebre::query()
@@ -19,6 +21,31 @@ class RecursoService
     public function obtener(int $id): RecursoPesebre
     {
         return RecursoPesebre::findOrFail($id);
+    }
+        /** Devuelve ['confirmado' => bool, 'recurso' => RecursoPesebre]. */
+    public function reabastecer(int $id, int $cantidad): array
+    {
+        $recurso = $this->obtener($id);
+
+        try {
+            $resultado = $this->mercado->consultarExistencias($recurso->categoria, $cantidad);
+        } catch (MercadoNoDisponibleException $e) {
+            $recurso->estado = 'REABASTECIMIENTO_PENDIENTE';
+            $recurso->save();
+
+            return ['confirmado' => false, 'recurso' => $recurso];
+        }
+
+        if ($resultado === 'SIN_EXISTENCIAS') {
+            throw new ApiException(422, 'SIN_EXISTENCIAS',
+                'El Mercado de Belén no tiene existencias para esta categoría');
+        }
+
+        $recurso->cantidad += $cantidad;
+        $recurso->estado = $this->calcularEstado($recurso->cantidad, $recurso->stockMinimo);
+        $recurso->save();
+
+        return ['confirmado' => true, 'recurso' => $recurso];
     }
 
     public function crear(array $datos): RecursoPesebre
