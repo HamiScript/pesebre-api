@@ -1,8 +1,11 @@
 workspace:
   id: 1e4255d4-7774-48f8-88a0-5a255f10368b
+
 localResources:
   specs:
     - ../postman/specs/Pesebre-API.postman_collection.json/Pesebre-API.postman_collection.json.json
+  collections:
+    - ../Pesebre API.postman_collection.json
 resourceNameMappings:
   specs:
     - ../postman/specs/Pesebre-API.postman_collection.json/Pesebre-API.postman_collection.json.json: Pesebre-API.postman_collection.json
