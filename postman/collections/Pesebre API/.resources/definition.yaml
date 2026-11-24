@@ -1,1 +1,7 @@
 $kind: collection
+auth:
+  - id: aaaae4db-f66d-4ef5-88f8-a8036bfdc04f
+    type: bearer
+    name: Bearer Token
+    credentials:
+      token: demo-encargado-2026

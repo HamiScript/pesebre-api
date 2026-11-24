@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/recursos
+method: POST
+body:
+  type: json
+  content: '{"nombre":"Mantas lana","categoria":"MANTA","cantidad":8,"stockMinimo":2}'
+auth:
+  type: inherit
+  credentials:
+    id: aaaae4db-f66d-4ef5-88f8-a8036bfdc04f
+order: 20000
