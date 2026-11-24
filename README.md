@@ -1,58 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Pesebre API — Escenario C (Gestión de recursos del pesebre)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST en Laravel para administrar los recursos del pesebre y sus animales, integrada con el servicio SOAP heredado MercadoBelenService.
 
-## About Laravel
+## Cómo levantar el proyecto
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. `composer install`
+2. Copiar `.env.example` a `.env`
+3. `php artisan key:generate`
+4. `php artisan migrate` (acepta crear el archivo SQLite si lo pregunta)
+5. `php artisan serve` → http://127.0.0.1:8000
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Requiere PHP 8.3 o superior.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Variables de entorno
 
-## Learning Laravel
+| Variable | Descripción |
+|---|---|
+| `APP_TIMEZONE` | `America/Guayaquil`; define "el mismo día" para la regla de alimentación |
+| `TOKEN_ENCARGADO` | Token del rol ENCARGADO_PESEBRE |
+| `TOKEN_PASTOR` | Token de un rol distinto (para probar el 403) |
+| `MERCADO_BELEN_URL` | Endpoint del servicio SOAP (el mock del docente) |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Usuarios / tokens de prueba
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Header `Authorization: Bearer <token>`.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+| Rol | Token |
+|---|---|
+| ENCARGADO_PESEBRE | `demo-encargado-2026` |
+| PASTOR | `demo-pastor-2026` |
 
-## Agentic Development
+Sin token → 401. Token de otro rol → 403.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Endpoints
 
-```bash
-composer require laravel/boost --dev
+| Método | Ruta | Seguridad |
+|---|---|---|
+| POST | /api/recursos | ENCARGADO_PESEBRE |
+| GET | /api/recursos (?categoria=, ?estado=) | pública |
+| GET | /api/recursos/{id} | pública |
+| PATCH | /api/recursos/{id}/consumo | ENCARGADO_PESEBRE |
+| PATCH | /api/recursos/{id}/reabastecimiento | ENCARGADO_PESEBRE |
+| DELETE | /api/recursos/{id} | ENCARGADO_PESEBRE |
+| POST | /api/animales | pública |
+| GET | /api/animales (?especie=) | pública |
+| PATCH | /api/animales/{id}/alimentacion | pública |
 
-php artisan boost:install
-```
+## Arquitectura
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Diagrama: [docs/arquitectura.png](docs/arquitectura.png)
 
-## Contributing
+Rutas (`routes/api.php`) → middleware `RolRequerido` (401/403) → controladores (solo validan formato, 400) → servicios (reglas de negocio, 409/422) → modelos Eloquent (SQLite).
+`MercadoAdapter` es la única clase que conoce el XML del SOAP. El manejador global de errores (`ErrorResponder`) da a todas las respuestas de error el mismo formato JSON.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Fallo del SOAP (Fault o más de 3 s): el adaptador lanza `MercadoNoDisponibleException`; el servicio deja el recurso en `REABASTECIMIENTO_PENDIENTE` sin cambiar la cantidad, y la API responde 202.
 
-## Code of Conduct
+## Decisiones donde el enunciado no define
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Nombre de recurso repetido → 409.
+- Token inexistente → 401.
+- Alimentar: primero se valida "ya alimentado hoy" (422) y luego el alimento (409).
+- Si hay varios recursos ALIMENTO_ANIMALES se usa el de menor id.
+- Un recurso sale de REABASTECIMIENTO_PENDIENTE al recalcularse su estado (consumo o reabastecimiento exitoso).
 
-## Security Vulnerabilities
+## Pruebas
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Colección de Postman: `docs/Pesebre-API.postman_collection.json`.
+Mock local del SOAP para pruebas: `php -S 127.0.0.1:8001 mock/mercado.php` (la cantidad 999 provoca el Fault).
 
-## License
+## Microservicios
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Separaría tres servicios. **Inventario**: dueño de los recursos (nombre, categoría, cantidad, stockMinimo, estado) y de las reglas de stock. **Animales**: dueño de los animales (nombre, especie, ración, última alimentación); para alimentar, pide a Inventario descontar la ración. **Reabastecimiento**: dueño del adaptador SOAP y de los pedidos pendientes; avisa a Inventario cuando el Mercado confirma. Cada servicio tendría su propia base de datos.
+
+Si el 24 de diciembre a las 23:00 cae Inventario, Animales no podría alimentar: respondería 503 sin marcar al animal como alimentado, pero seguiría listando animales. Si cae el Mercado, el pedido queda REABASTECIMIENTO_PENDIENTE, la API responde 202 y el inventario actual sigue operando hasta reintentar.
