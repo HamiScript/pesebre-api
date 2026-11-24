@@ -1,0 +1,7 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/animales
+method: POST
+body:
+  type: json
+  content: '{"nombre":"Oveja Lola","especie":"OVEJA","racionDiaria":10}'
+order: 14000

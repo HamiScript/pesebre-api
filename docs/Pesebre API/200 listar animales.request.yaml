@@ -1,0 +1,6 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/animales?especie=BUEY
+method: GET
+queryParams:
+  especie: BUEY
+order: 18000

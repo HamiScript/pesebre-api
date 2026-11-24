@@ -1,0 +1,7 @@
+$kind: http-request
+url: http://127.0.0.1:8000/api/recursos
+method: GET
+body:
+  type: json
+  content: '{"nombre":"Heno","categoria":"ALIMENTO_ANIMALES","cantidad":10,"stockMinimo":3}'
+order: 10000

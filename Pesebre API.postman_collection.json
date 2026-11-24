@@ -1,0 +1,758 @@
+{
+  "info": {
+    "_postman_id": "BfAD8bc51dadf6cD6306ccdD",
+    "name": "Pesebre API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "demo-encargado-2026",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "201 crear recurso",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Paja gruesa\",\"categoria\":\"PAJA\",\"cantidad\":20,\"stockMinimo\":5}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "409 consumo excesivo",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/2/consumo",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "2",
+            "consumo"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"cantidad\":100}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "409 borrar con stock",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/2",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "200 listar recursos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "200 ver detalle",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/2",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "404 recurso inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/999",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "400 Entrada invalida",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "409 nombre duplicado",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Paja gruesa\",\"categoria\":\"PAJA\",\"cantidad\":20,\"stockMinimo\":5}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "201 creacion",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Heno\",\"categoria\":\"ALIMENTO_ANIMALES\",\"cantidad\":10,\"stockMinimo\":3}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ID_HENO",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Heno\",\"categoria\":\"ALIMENTO_ANIMALES\",\"cantidad\":10,\"stockMinimo\":3}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "200 Alimentar animal",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/animales/1/alimentacion",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "animales",
+            "1",
+            "alimentacion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/3",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "422 Ya alimentado",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/animales/1/alimentacion",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "animales",
+            "1",
+            "alimentacion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "201 creacion de animal",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/animales",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "animales"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Oveja Lola\",\"especie\":\"OVEJA\",\"racionDiaria\":10}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "409 alimento insuficiente",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/animales/2/alimentacion",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "animales",
+            "2",
+            "alimentacion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "404 animal inexistente",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/animales/999/alimentacion",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "animales",
+            "999",
+            "alimentacion"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "400 animal no valido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/animales",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "animales"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"X\",\"especie\":\"GATO\",\"racionDiaria\":11}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "200 listar animales",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/animales?especie=BUEY",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "animales"
+          ],
+          "query": [
+            {
+              "key": "especie",
+              "value": "BUEY"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "401 sin token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Mantas lana\",\"categoria\":\"MANTA\",\"cantidad\":8,\"stockMinimo\":2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "auth": {
+          "type": "noauth"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "403 rol insuficiente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Mantas lana\",\"categoria\":\"MANTA\",\"cantidad\":8,\"stockMinimo\":2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "201 crear con token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Mantas lana\",\"categoria\":\"MANTA\",\"cantidad\":8,\"stockMinimo\":2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "200 reestablecer",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/3/reabastecimiento",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "3",
+            "reabastecimiento"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"cantidad\":10}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "422 sin existencias",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/3/reabastecimiento",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "3",
+            "reabastecimiento"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"cantidad\":500}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "202 SOAP caido",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/recursos/3/reabastecimiento",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1:8000"
+          ],
+          "path": [
+            "api",
+            "recursos",
+            "3",
+            "reabastecimiento"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"cantidad\":999}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    }
+  ]
+}

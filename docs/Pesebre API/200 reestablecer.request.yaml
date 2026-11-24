@@ -3,7 +3,7 @@ url: http://127.0.0.1:8000/api/recursos/3/reabastecimiento
 method: PATCH
 body:
   type: json
-  content: '{"cantidad":5}'
+  content: '{"cantidad":10}'
 auth:
   type: inherit
   credentials:

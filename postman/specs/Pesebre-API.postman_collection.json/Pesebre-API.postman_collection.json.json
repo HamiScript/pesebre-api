@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Pesebre-API.postman_collection.json",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000"
+    },
+    {
+      "url": ""
+    }
+  ],
+  "paths": {
+    "/api/recursos": {
+      "post": {
+        "summary": "201 crear recurso",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "categoria": {
+                    "type": "string"
+                  },
+                  "cantidad": {
+                    "type": "integer"
+                  },
+                  "stockMinimo": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "example": {
+                "nombre": "Paja gruesa",
+                "categoria": "PAJA",
+                "cantidad": 20,
+                "stockMinimo": 5
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "200 listar recursos",
+        "responses": {}
+      }
+    },
+    "/api/recursos/2/consumo": {
+      "patch": {
+        "summary": "409 consumo excesivo",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cantidad": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "example": {
+                "cantidad": 100
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recursos/2": {
+      "delete": {
+        "summary": "409 borrar con stock",
+        "responses": {}
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "200 ver detalle",
+        "responses": {}
+      }
+    },
+    "/api/animales/1/alimentacion": {
+      "patch": {
+        "summary": "200 Alimentar animal",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recursos/3": {
+      "get": {
+        "summary": "New Request",
+        "responses": {}
+      }
+    },
+    "/api/animales/2/alimentacion": {
+      "patch": {
+        "summary": "409 alimento insuficiente",
+        "responses": {}
+      }
+    },
+    "/api/animales/999/alimentacion": {
+      "patch": {
+        "summary": "404 animal inexistente",
+        "responses": {}
+      }
+    },
+    "/api/animales": {
+      "post": {
+        "summary": "400 animal no valido",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "especie": {
+                    "type": "string"
+                  },
+                  "racionDiaria": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "example": {
+                "nombre": "X",
+                "especie": "GATO",
+                "racionDiaria": 11
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recursos/3/reabastecimiento": {
+      "patch": {
+        "summary": "200 reestablecer",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cantidad": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "example": {
+                "cantidad": 5
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
+}
